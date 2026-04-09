@@ -5,7 +5,7 @@ import maya.cmds as mc
 import importlib
 import core.MayaUtilities
 importlib.reload(core.MayaUtilities)
-from core.MayaUtilities import CreateCircleControllerForJnt
+from core.MayaUtilities import CreateCircleControllerForJnt, CreateBoxControllerForJnt
 
 class LimbRigger:
     def __init__(self):
@@ -28,7 +28,14 @@ class LimbRigger:
         rootJnt, midJnt, endJnt = mc.ls(sl=True)
         print(f"found root {rootJnt}, mid: {midJnt} and end: {endJnt}")
 
-        rootCtrl, rootCtrlGrp = CreateCircleControllerForJnt(rootJnt, self.nameBase, self.controllerSize)
+        rootCtrl, rootCtrlGrp = CreateCircleControllerForJnt(rootJnt, "fk_" + self.nameBase, self.controllerSize)
+        midCtrl, midCtrlGrp = CreateCircleControllerForJnt(midJnt, "fk_" + self.nameBase, self.controllerSize)
+        endCtrl, endCtrlGrp = CreateCircleControllerForJnt(endJnt, "fk_" + self.nameBase, self.controllerSize)
+
+        mc.parent(endCtrlGrp, midCtrl)
+        mc.parent(midCtrlGrp, rootCtrl)
+
+        endIkCtrl, endIkCtrlGrp = CreateBoxControllerForJnt(endJnt, "ik_" + self.nameBase, self.controllerSize)
 
 
 class LimbRiggerWidget(MayaWidget):
