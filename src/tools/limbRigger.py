@@ -47,6 +47,9 @@ class LimbRigger:
         ikfkBlendAttrName = "ikfkBlend"
         mc.addAttr(ikFkBlendController, ln=ikfkBlendAttrName, min=0, max=1, k=True)
 
+        ikHandleName = "ikHandle_" + self.nameBase 
+        mc.ikHandle(n=ikHandleName, sj = rootJnt, ee=endJnt, sol="ikRPsolver")
+
 
 class LimbRiggerWidget(MayaWidget):
     def __init__(self):
