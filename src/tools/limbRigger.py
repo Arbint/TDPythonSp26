@@ -56,7 +56,7 @@ class LimbRigger:
         rootJntLoc = GetObjectPositionAsMVec(rootJnt)
         endJntLoc = GetObjectPositionAsMVec(endJnt)
 
-        poleVectorVals = mc.getAttr(f"{ikHandleName}.poleVector")
+        poleVectorVals = mc.getAttr(f"{ikHandleName}.poleVector")[0]
         poleVecDir = MVector(poleVectorVals[0], poleVectorVals[1], poleVectorVals[2])
         poleVecDir.normalize() # make it a unit vector, a vector that has a length of 1
 
