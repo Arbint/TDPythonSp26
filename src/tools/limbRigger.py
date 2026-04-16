@@ -78,6 +78,14 @@ class LimbRigger:
         mc.setAttr(f"{ikHandleName}.v", 0)
 
         mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{ikHandleName}.ikBlend")
+        mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{endIkCtrlGrp}.v")
+        mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{poleVectorCtrlGrpName}.v")
+
+        reverseNodeName = f"{self.nameBase}_reverse"
+        mc.createNode("reverse", n=reverseNodeName)
+
+        mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{reverseNodeName}.inputX")
+        mc.connectAttr(f"{reverseNodeName}.outputX", f"{rootCtrlGrp}.v")
 
 
 
