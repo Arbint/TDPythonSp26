@@ -2,12 +2,13 @@ import maya.cmds as mc
 import maya.mel as ml
 from maya.OpenMaya import MVector
 
-def ConfigureCtrlForJnt(jnt, ctrlName):
+def ConfigureCtrlForJnt(jnt, ctrlName, doContraint=True):
     ctrlGrpName = ctrlName + "_grp"
     mc.group(ctrlName, n=ctrlGrpName)
 
     mc.matchTransform(ctrlGrpName, jnt)
-    mc.orientConstraint(ctrlName, jnt)    
+    if doContraint:
+        mc.orientConstraint(ctrlName, jnt)  
 
     return ctrlName, ctrlGrpName
 

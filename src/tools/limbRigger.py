@@ -45,7 +45,7 @@ class LimbRigger:
 
         ikFkBlendCtrlPrefix = self.nameBase + "_ikfkBlend"
         ikFkBlendController =  CreatePlusController(ikFkBlendCtrlPrefix, self.blendControllerSize)
-        ikFkBlendController, ikFkBlendControllerGrp = ConfigureCtrlForJnt(rootJnt, ikFkBlendController)
+        ikFkBlendController, ikFkBlendControllerGrp = ConfigureCtrlForJnt(rootJnt, ikFkBlendController, False)
 
         ikfkBlendAttrName = "ikfkBlend"
         mc.addAttr(ikFkBlendController, ln=ikfkBlendAttrName, min=0, max=1, k=True)
@@ -73,6 +73,9 @@ class LimbRigger:
 
         mc.setAttr(f"{poleVectorCtrlGrpName}.translate", poleVectorCtrlLoc.x, poleVectorCtrlLoc.y, poleVectorCtrlLoc.z, type="double3")
         mc.poleVectorConstraint(poleVectorCtrlName, ikHandleName)
+
+        mc.parent(ikHandleName, endIkCtrl)
+        mc.setAttr(f"{ikfkBlendAttrName}.v", 0)
 
 
 
