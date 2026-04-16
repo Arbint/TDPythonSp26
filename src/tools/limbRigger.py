@@ -75,9 +75,9 @@ class LimbRigger:
         mc.poleVectorConstraint(poleVectorCtrlName, ikHandleName)
 
         mc.parent(ikHandleName, endIkCtrl)
-        mc.setAttr(f"{ikfkBlendAttrName}.v", 0)
+        mc.setAttr(f"{ikHandleName}.v", 0)
 
-
+        mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{ikHandleName}.ikBlend")
 
 
 
