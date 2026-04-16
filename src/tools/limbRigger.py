@@ -87,6 +87,15 @@ class LimbRigger:
         mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{reverseNodeName}.inputX")
         mc.connectAttr(f"{reverseNodeName}.outputX", f"{rootCtrlGrp}.v")
 
+        orientConstaint = None
+        wristConnections = mc.listConnections(endJnt)
+        for connection in wristConnections:
+            if mc.objectType(connection) == "orientConstraint":
+                orientConstaint = connection
+                break
+
+        mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{orientConstaint}.{endIkCtrl}W1")
+        mc.connectAttr(f"{reverseNodeName}.outputX", f"{orientConstaint}.{endCtrl}W0")
 
 
 class LimbRiggerWidget(MayaWidget):
