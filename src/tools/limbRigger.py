@@ -18,6 +18,7 @@ class LimbRigger:
         self.nameBase = ""
         self.controllerSize = 10
         self.blendControllerSize = 4
+        self.controlColorRGB = [0,0,0]
 
     def SetNameBase(self, newNameBase):
         self.nameBase = newNameBase
@@ -105,6 +106,8 @@ class LimbRigger:
         mc.parent(endIkCtrlGrp, topGrpName)
         mc.parent(poleVectorCtrlGrpName, topGrpName)
 
+        # add color overide for the topGrpName to be self.controllColorRGB
+
 
 class LimbRiggerWidget(MayaWidget):
     def __init__(self):
@@ -127,9 +130,14 @@ class LimbRiggerWidget(MayaWidget):
         self.setNameBaseBtn.clicked.connect(self.SetNameBaseBtnClicked)
         self.infoLayout.addWidget(self.setNameBaseBtn)
 
+        # add a color pick widget to the self.masterLayout
+        # listen for color change and connect to a function.
+        # the function needs to update the color of of limbRigger: self.rigger.controlColorRGB
+
         self.rigLimbBtn = QPushButton("Rig Limb")
         self.rigLimbBtn.clicked.connect(self.RigLimbBtnClicked)
         self.masterLayout.addWidget(self.rigLimbBtn)
+
 
     def SetNameBaseBtnClicked(self):
         self.rigger.SetNameBase(self.nameBaseLineEdit.text())
