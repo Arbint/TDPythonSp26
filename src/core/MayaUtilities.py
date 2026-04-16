@@ -36,6 +36,7 @@ def CreatePlusController(namePrefix, size):
     mc.setAttr(f'{ctrlName}.rotateZ', lock=True, cb=False, k=False)
     mc.setAttr(f'{ctrlName}.visibility', lock=True, cb=False, k=False)
 
+    SetCurveLineWidth(ctrlName, 2)
     return ctrlName
 
 
@@ -43,6 +44,7 @@ def CreatePlusController(namePrefix, size):
 def CreateCircleControllerForJnt(jnt, namePrefix, radius=10):
     ctrlName = f"ac_{namePrefix}_{jnt}"  
     mc.circle(n=ctrlName, r = radius, nr=(1,0,0))
+    SetCurveLineWidth(ctrlName, 2)
     return ConfigureCtrlForJnt(jnt, ctrlName)
 
 
@@ -53,6 +55,8 @@ def CreateBoxControllerForJnt(jnt, namePrefix, size=10):
 
     # this is the same as freeze transformation command in maya
     mc.makeIdentity(ctrlName, apply=True)
+
+    SetCurveLineWidth(ctrlName, 2)
     return ConfigureCtrlForJnt(jnt, ctrlName)
 
 
@@ -60,3 +64,8 @@ def GetObjectPositionAsMVec(objectName)->MVector:
     # t means translate values, ws means world space, q mean query
     wsLoc = mc.xform(objectName, t=True, ws=True, q=True)
     return MVector(wsLoc[0], wsLoc[1], wsLoc[2])
+
+def SetCurveLineWidth(curve, newWidth):
+    shapes = mc.listRelatives(curve, s=True)
+    for shape in shapes:
+        mc.setAttr(f"{shape}.lineWidth", newWidth)

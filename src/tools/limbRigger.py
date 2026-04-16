@@ -97,6 +97,14 @@ class LimbRigger:
         mc.connectAttr(f"{ikFkBlendController}.{ikfkBlendAttrName}", f"{orientConstaint}.{endIkCtrl}W1")
         mc.connectAttr(f"{reverseNodeName}.outputX", f"{orientConstaint}.{endCtrl}W0")
 
+        topGrpName = f"{self.nameBase}_rig_grp"
+        mc.group(n=topGrpName, empty=True)
+
+        mc.parent(rootCtrlGrp, topGrpName)
+        mc.parent(ikFkBlendControllerGrp, topGrpName)
+        mc.parent(endIkCtrlGrp, topGrpName)
+        mc.parent(poleVectorCtrlGrpName, topGrpName)
+
 
 class LimbRiggerWidget(MayaWidget):
     def __init__(self):
